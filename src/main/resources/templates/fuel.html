@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fuel</title>
+    <link href="css/fuel.css" rel="stylesheet">
+</head>
+<body>
+<div id="inDiv">
+<form th:action ="@{/fuel}" method="post">
+    <h3 id="h3Form">Добавление:</h3>
+    <input type="text" name="name" placeholder="Введите название"><br>
+    <input type="number" name="volume" placeholder="Введите объем"><br>
+    <div id="dateTransportation"><a id="aDateTransportation">Дата поставки:</a></div>
+    <input type="date" name="delivery"/><br>
+    <input type="number" name="hangarNumber" placeholder="Номер ангара"><br>
+    <button type="submit" id="add">Добавить</button>
+
+</form>
+</div>
+
+<h3 class="outH3">Список топлива:</h3>
+<h3 class="outH3">Название, объем, дата поставки.</h3>
+<div class="outDiv" th:each="el : ${fuel}">
+    <div><a class="outEdit" th:text="${el.hangar.getNumber}"/></div>
+    <div><a class="outEdit" th:text="${el.name}+' '+${el.volume}+'л'"/></div>
+    <div><a class="outEdit" th:text="${el.delivery}"/></div>
+</div>
+</body>
+</html>

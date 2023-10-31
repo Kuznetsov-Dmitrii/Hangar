@@ -1,0 +1,51 @@
+input{
+    margin-top: 15px;
+}
+#h3Form{
+    height: 10px;
+    margin-top:0px;
+}
+#inDiv{
+    width: 400px;
+    height: 200px;
+    margin-left: 700px;
+    position:absolute;
+}
+.outH3{
+    margin-left: 20px;
+
+}
+.outEdit{
+    padding-left:8px;
+    text-decoration: none;
+    color: black;
+}
+#deleteButton{
+    background: red;
+    margin-left:8px;
+
+}
+.outDiv{
+    width: 600px;
+    height: 150px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 4px double ;
+    border-color: #0ee1f0;
+}
+button{
+    margin-top:10px;
+    border:none;
+}
+.edit{
+    padding-left:8px;
+}
+.editA{
+    background-color: #1E90FF;
+    text-decoration: none;
+    color: black;
+    padding-left:4px;
+}
+#add{
+    background-color:green;
+}

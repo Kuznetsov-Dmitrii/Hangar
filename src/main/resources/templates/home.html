@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Spring Security Example</title>
+</head>
+<body>
+<h3 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h3>
+
+<!--<a th:text="${mes}"></a><br>-->
+<div><a th:href="@{/main}">Main page</a></div>
+<div><a th:href="@{/forDriver}">forDriver</a></div>
+<div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+input{
+    margin-top: 15px;
+}
+#h3Form{
+    height: 10px;
+    margin-top:0px;
+}
+#inDiv{
+    width: 400px;
+    height: 200px;
+    margin-left: 700px;
+    position:absolute;
+}
+#add{
+    background-color:green;
+    padding-left:4px;
+}
+.edit{
+    padding-left:8px;
+}
+.editA{
+    background-color: #1E90FF;
+    text-decoration: none;
+    color: black;
+}
+.outH3{
+    margin-left: 20px;
+}
+.outEdit{
+    padding-left:8px;
+    text-decoration: none;
+    color: black;
+}
+#deleteButton{
+    background: red;
+    margin-left:8px;
+}
+#dateTransportation{
+    text-decoration: none;
+    margin-top: 10px;
+}
+#aDateTransportation{
+    color:black;
+}
+.outDiv{
+    width: 600px;
+    height: 187px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border: 4px double ;
+    border-color: #0ee1f0;
+}
+button{
+    margin-top:10px;
+    padding-left:0px;
+    border:none;
+}

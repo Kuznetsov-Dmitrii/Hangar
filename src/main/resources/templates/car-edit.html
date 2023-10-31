@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car-edit</title>
+    <link href="css/carEdit.css" rel="stylesheet">
+<!--    th:action="@{'/cars/'+${car.id}+'/edit'}"-->
+</head>
+<body>
+<div th:object="${car}" >
+    <form  method="post" th:action="@{'/cars/'+${id}+'/edit'}">
+        <div class="inDiv"><input class="inDiv" type="text" th:value="*{name}" name="name" placeholder="Введите название"></div>
+        <div class="inDiv"><input type="text" th:value="*{number}" name="number" placeholder="Введите номер"></div>
+        <div class="inDiv"><input type="number" th:value="*{loadCapacity}" name="loadCapacity"
+                    placeholder="Введите грузоподъемность (кг)"></div>
+        <div class="inDiv"><input type="number" th:value="*{hangar.getNumber}" name="hangarNumber" placeholder="Номер ангара"></div>
+        <div class="inDiv"><input type="checkbox" name="state" checked="true"/></div>
+        <div class="inDiv">
+            <button id="io" type="submit">Изменить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

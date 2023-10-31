@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Spring Security Example </title>
+    <meta content="HTML,CSS,XML,JavaScript" charset="UTF-8"/>
+    <link href="css/driver.css" rel="stylesheet">
+</head>
+<body>
+<form th:action="@{/registration}" method="post">
+    <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+
+
+    <input type="text" name="name" placeholder="Введите имя"><br>
+    <input type="text" name="midlname" placeholder="Введите отчество"><br>
+    <input type="text" name="surname" placeholder="Введите фамилию"><br>
+    <input type="text" name="carNumber" placeholder="Номер автомобиля"><br>
+<!--    <input type="text" name="username" placeholder="Логин водителя"><br>-->
+
+
+    <div><input id="add" type="submit" value="Sign In"/></div>
+</form>
+<!--<script  src="js/registrations.js"></script>-->
+
+</body>
+</html>

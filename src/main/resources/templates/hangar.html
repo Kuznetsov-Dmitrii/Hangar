@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangar</title>
+    <link href="css/hangar.css" rel="stylesheet">
+</head>
+<body>
+<div id="inDiv">
+    <form th:action="@{/hangar}" method="post">
+        <h3 id="h3Form">Добавление:</h3>
+        <input type="number" name="number" placeholder="Введите номер"><br>
+        <input type="text" name="town" placeholder="Введите город"><br>
+        <input type="text" name="address" placeholder="Введите адрес"><br>
+        <button type="submit" id="add">Добавить</button>
+    </form>
+</div>
+<h3 class="outH3">Список ангаров:</h3>
+<h3 class="outH3">Номер ангара, город, адрес.</h3>
+<div th:each="el : ${hangar}" class="outDiv">
+    <div><a class="outEdit" th:text="${el.number}"/></div>
+    <div><a class="outEdit" th:text="${el.townName}"/></div>
+    <div><a class="outEdit" th:text="${el.address}"/></div>
+</div>
+<script src="js/hangar.js"></script>
+
+</body>
+</html>

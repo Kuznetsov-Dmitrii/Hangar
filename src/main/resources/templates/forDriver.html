@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>forDriver</title>
+    <link href="css/forDriver.css" rel="stylesheet">
+</head>
+<body>
+
+<h3 class="outH3">Список перевозок:</h3>
+<h3 class="outH3">Номер заказа, адрес, номер автомобиля, статус, грузоподъемность, номер ангара.</h3>
+<div th:each="el : ${driverFlight}" class="outDiv">
+    <div><a class="outEdit" th:text="${el.id}"/></div>
+    <div><a class="outEdit" th:text="${el.address}"/></div>
+<!--    <div><a class="outEdit" th:text="${el.car.getNumber}"/></div>-->
+    <div><a class="outEdit" th:text="${el.fuel.getName}"/></div>
+    <div><a class="outEdit" th:text="${el.volume}+'л'"/></div>
+    <div><a class="outEdit" th:text="${el.departure_date}"/></div>
+    <div><a class="outEdit" th:text="${el.state}"/></div>
+<!--    hidden="hidden"-->
+    <form th:action="@{'/forDriver/'+${el.id}+'/complete'}" method="post">
+        <button id="deleteButton" type="submit">Завершить</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver-edit</title>
+    <link href="css/driver.css" rel="stylesheet">
+</head>
+<body>
+<div id="inDiv" th:object="${driver}">
+    <form method="post" th:action="@{'/driver/'+${id}+'/edit'}">
+        <div><input type="text" th:value="*{name}" name="name" placeholder="Введите имя"><br></div>
+        <div><input type="text" th:value="*{midlname}" name="midlname" placeholder="Введите отчество"><br></div>
+        <div><input type="text" th:value="*{surname}" name="surname" placeholder="Введите фамилию"><br></div>
+        <div><input type="text" th:value="*{car.getNumber}" name="carNumber" placeholder="Номер автомобиля"><br></div>
+        <div><input type="checkbox" name="state" checked="true"/></div>
+        <div>
+            <button type="submit">Изменить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

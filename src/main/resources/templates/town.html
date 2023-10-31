@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Town</title>
+    <link href="css/town.css" rel="stylesheet">
+</head>
+<body>
+<div id="inDiv">
+    <form th:action="@{/town}" method="post">
+        <h3 id="h3Form">Добавление:</h3>
+        <input type="text" name="name" placeholder="Введите название"><br>
+        <button type="submit" id="add">Добавить</button>
+    </form>
+</div>
+<h3 class="outH3">Список городов:</h3>
+<div th:each="el : ${town}" class="outDiv">
+    <h3 class="outEdit" th:text="${el.name}"/>
+</div>
+</body>
+</html>

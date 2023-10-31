@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver</title>
+    <link href="css/driver.css" rel="stylesheet">
+</head>
+<body>
+<!--<div id="inDiv">-->
+<!--    <form th:action="@{/driver}" method="post">-->
+<!--        <h3 id="h3Form">Добавление:</h3>-->
+<!--        <input type="text" name="name" placeholder="Введите имя"><br>-->
+<!--        <input type="text" name="midlname" placeholder="Введите отчество"><br>-->
+<!--        <input type="text" name="surname" placeholder="Введите фамилию"><br>-->
+<!--        <input type="text" name="carNumber" placeholder="Номер автомобиля"><br>-->
+<!--        <input type="text" name="username" placeholder="Логин водителя"><br>-->
+<!--        <button type="submit" id="add">Добавить</button>-->
+<!--        <br>-->
+<!--    </form>-->
+<!--</div>-->
+<h3 class="outH3">Список водителей:</h3>
+<h3 class="outH3">Номер, фио, номер автомобиля, статус.</h3>
+<div th:each="el : ${driver}" class="outDiv">
+
+    <div><a class="outEdit" th:text="${el.id}"/></div>
+    <div><a class="outEdit" th:text="${el.surname}+' '+${el.name}+' ' + ${el.midlname}"/></div>
+    <div><a class="outEdit" th:text="${el.car.getNumber}"/></div>
+    <div><a class="outEdit" th:text="${el.state}"/></div>
+
+    <div class="edit">
+        <a id="123" class="editA" th:href="@{'/driver/'+${el.id}+'/edit'}">Редактировать</a>
+    </div>
+    <form th:action="@{'/driver/'+${el.id}+'/remove'}" method="post">
+        <button id="deleteButton" type="submit">Удалить</button>
+    </form>
+</div>
+</body>
+</html>
