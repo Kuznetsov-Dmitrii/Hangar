@@ -32,6 +32,9 @@ public class IndexController implements ErrorController{
         else if (response.getStatus() == HttpStatus.FORBIDDEN.value()) {
             modelAndView.setViewName("error/error-403");
         }
+        else if (response.getStatus() == HttpStatus.BAD_REQUEST.value()) {
+            modelAndView.setViewName("error/error-400");
+        }
         else if (response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
             modelAndView.setViewName("error/error-500");
         }

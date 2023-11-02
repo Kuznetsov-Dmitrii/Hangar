@@ -16,6 +16,9 @@
 <h3 class="outH3">Список городов:</h3>
 <div th:each="el : ${town}" class="outDiv" id="divEach">
     <h3 class="outEdit" th:text="${el.name}"/>
+    <form th:action="@{'/town/'+${el.id}+'/remove'}" method="post">
+        <button id="deleteButton" type="submit">Удалить</button>
+    </form>
 </div>
 
 <script  src="js/town.js"></script>

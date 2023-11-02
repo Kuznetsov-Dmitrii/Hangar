@@ -4,10 +4,7 @@ import org.springframework.stereotype.Controller;
 import com.example.hangar.service.TownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TownController {
@@ -17,6 +14,12 @@ public class TownController {
     @PostMapping("/town")
     public String townAdd(@RequestParam String name, Model model) {
         townService.townSave(name);
+        return "redirect:/town";
+    }
+
+    @PostMapping("/town/{id}/remove")
+    public String townDelete(@PathVariable(value = "id") Integer id, Model model) {
+        townService.townDelete(id);
         return "redirect:/town";
     }
 

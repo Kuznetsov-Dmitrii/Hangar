@@ -14,6 +14,12 @@ public interface TownRepo extends org.springframework.data.repository.Repository
     @Query(value = "select id from Town order by id desc limit 1", nativeQuery = true)
     Integer LastId();
 
+    @Modifying
+    @Transactional
+    @Query(value = "delete from Town\n" +
+            "    where town.id=?1", nativeQuery = true)
+    void deleteTown(@Param("id") Integer id);
+
     @Query(value = "SELECT * FROM Town order by name", nativeQuery = true)
     List<Town> Alltown();
 
