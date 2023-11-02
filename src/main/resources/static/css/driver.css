@@ -20,6 +20,11 @@ input{
     text-decoration: none;
     color: black;
 }
+.state{
+padding-left:8px;
+    text-decoration: none;
+    color: black;
+    }
 #deleteButton{
     background: red;
     margin-left:8px;

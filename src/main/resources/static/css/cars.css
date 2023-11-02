@@ -5,6 +5,11 @@ input{
     height: 10px;
     margin-top:0px;
 }
+.state{
+padding-left:8px;
+    text-decoration: none;
+    color: black;
+    }
 #inDiv{
     width: 400px;
     height: 200px;

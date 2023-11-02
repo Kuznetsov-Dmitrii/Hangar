@@ -7,14 +7,14 @@
 </head>
 <body>
 <div id="inDiv">
-    <form th:action="@{/cars}" method="post">
+    <form th:action="@{/cars}" onsubmit="return checkForm(this)" method="post">
         <h3 id="h3Form">Добавление:</h3>
-        <div><input type="text" name="name" placeholder="Введите название"></div>
-        <div><input type="text" name="number" placeholder="Введите номер"></div>
-        <div><input type="number" name="loadCapacity" placeholder="Введите грузоподъемность (кг)"></div>
+        <div><input type="text"  name="name" placeholder="Введите название"></div>
+        <div><input type="text"  name="number" placeholder="Введите номер"></div>
+        <div><input type="number"  name="loadCapacity" placeholder="Введите грузоподъемность (кг)"></div>
         <div><input type="number" name="hangarNumber" placeholder="Номер ангара"></div>
         <div>
-            <button type="submit" id="add">Добавить</button>
+            <button type="submit" id="add" >Добавить</button>
         </div>
 
     </form>
@@ -22,13 +22,15 @@
 <h3 class="outH3">Список машин:</h3>
 <h3 class="outH3">Название, номер, статус, грузоподъемность, номер ангара.</h3>
 <div th:each="el : ${cars}" class="outDiv">
-    <div><a class="outEdit" th:text="${el.name}+' ' + ${el.number} + ' ' + ${el.state}"/></div>
+    <div><a class="outEdit" th:text="${el.name}+' ' + ${el.number}"/></div>
     <div><a class="outEdit" th:text="${el.loadCapacity}+'л'"/></div>
     <div><a class="outEdit" th:text="${el.hangar.getNumber}+' ангар'"/></div>
+    <div><a class="state"   th:text="${el.state}"/></div>
     <div class="edit"><a  class="editA" th:href="@{'/cars/'+${el.id}+'/edit'}">Редактировать</a></div>
     <form th:action="@{'/car/'+${el.id}+'/remove'}" method="post">
         <button id="deleteButton" type="submit">Удалить</button>
     </form>
 </div>
+<script  src="js/cars.js"></script>
 </body>
 </html>

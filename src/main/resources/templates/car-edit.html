@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Car-edit</title>
-    <link href="css/carEdit.css" rel="stylesheet">
-<!--    th:action="@{'/cars/'+${car.id}+'/edit'}"-->
+    <link href="../../css/cars.css" rel="stylesheet">
 </head>
 <body>
+
+
 <div th:object="${car}" >
-    <form  method="post" th:action="@{'/cars/'+${id}+'/edit'}">
+    <form onsubmit="return checkForm(this)"  method="post" th:action="@{'/cars/'+${id}+'/edit'}">
         <div class="inDiv"><input class="inDiv" type="text" th:value="*{name}" name="name" placeholder="Введите название"></div>
         <div class="inDiv"><input type="text" th:value="*{number}" name="number" placeholder="Введите номер"></div>
         <div class="inDiv"><input type="number" th:value="*{loadCapacity}" name="loadCapacity"
@@ -20,5 +21,7 @@
         </div>
     </form>
 </div>
+<script  src="../../js/cars.js"></script>
+
 </body>
 </html>
