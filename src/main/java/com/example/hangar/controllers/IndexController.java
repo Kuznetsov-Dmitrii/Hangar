@@ -25,7 +25,6 @@ public class IndexController implements ErrorController{
         ModelAndView modelAndView = new ModelAndView();
 
         if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
-            System.out.println(response.getStatus());
             modelAndView.setViewName("error/error-404");
             //modelAndView.setViewName("redirect:/");
         }
