@@ -10,13 +10,13 @@
 <div id="inDiv">
     <form th:action="@{/transportation}" method="post">
         <h3 id="h3Form">Добавление:</h3>
-        <input type="number" name="numberDriver" placeholder="Введите номер водителя"><br>
+<!--        <input type="number" name="numberDriver" placeholder="Введите номер водителя"><br>-->
         <!--        <input type="text" name="numberCar" placeholder="Введите номер автомобиля"><br>-->
         <input type="text" name="nameFuel" placeholder="Введите название топлива"><br>
         <input type="number" name="volumeFuel" placeholder="Введите объем топлива"><br>
         <div id="dateTransportation"><a id="aDateTransportation">Дата отправки:</a></div>
         <input type="date" name="date"/><br>
-        <input type="text" name="address" placeholder="Введите адрес"><br>
+        <input type="text" name="address" placeholder="Введите адрес" id="address" ><br>
         <button type="submit" id="add">Добавить</button>
     </form>
 </div>

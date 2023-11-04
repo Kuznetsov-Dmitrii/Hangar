@@ -29,7 +29,6 @@ public interface TransportationRepo extends org.springframework.data.repository.
     void orderComplete(@Param("id") Integer id);
 
 
-
     @Query(value = "select *\n" +
             "from transportation\n" +
             "where driver_id=\n" +

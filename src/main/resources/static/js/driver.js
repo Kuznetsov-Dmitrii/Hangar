@@ -7,3 +7,4 @@ for(var i=0;i<state.length;i++){
         state[i].text="Занят";
     }
 }
+

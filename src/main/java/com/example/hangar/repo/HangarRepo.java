@@ -16,6 +16,14 @@ public interface HangarRepo extends org.springframework.data.repository.Reposito
     @Query(value = "SELECT * FROM Hangar ", nativeQuery = true)
     List<Hangar> Allhangar();
 
+    @Query(value = "select * \n" +
+            "from Hangar\n" +
+            "where Hangar.id in(\n" +
+            "select hangar_id\n" +
+            "from Fuel\n" +
+            "where Fuel.name=?1 and Fuel.volume>?2)", nativeQuery = true)
+    List<Hangar> hangarFuel(@Param("name") String name, @Param("volume") Integer volume);
+
     @Query(value = "select * from Hangar where hangar.number = ?1", nativeQuery = true)
     Hangar findByNumber(@Param("number") Integer number);
 
