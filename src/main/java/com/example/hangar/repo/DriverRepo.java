@@ -29,16 +29,10 @@ public interface DriverRepo extends org.springframework.data.repository.Reposito
 
     @Modifying
     @Transactional
-    @Query(value = "update Driver\n" +
-            "set midlname = ?2,\n" +
-            " name = ?3,\n" +
-            " surname = ?4,\n" +
-            " state = ?5,\n" +
-            " car_id = ?6\n" +
-            "where id = ?1", nativeQuery = true)
-    void updateDriverTransportation(@Param("id") Integer id, @Param("midlname") String midlname,
-                                    @Param("name") String name, @Param("surname") String surname,
-                                    @Param("state") boolean state, @Param("car") Integer car_id);
+    @Query(value = "update driver\n" +
+            "set state = 'false'\n" +
+            "where driver.id=?1", nativeQuery = true)
+    void updateDriverStateFalse(@Param("id") Integer id);
 
     @Query(value = "select id from Driver order by id desc limit 1", nativeQuery = true)
     Integer LastId();
@@ -65,6 +59,12 @@ public interface DriverRepo extends org.springframework.data.repository.Reposito
             "    where driver.id=?1", nativeQuery = true)
     void deleteDriver(@Param("id") Integer id);
 
+    @Query(value = "select * from driver\n" +
+            "where car_id = ?1", nativeQuery = true)
+    Driver findByCarId(@Param("car_id") Integer car_id);
+    @Query(value = "select * from driver\n" +
+            "where car_id = ?1 and state='true' limit 1", nativeQuery = true)
+    Driver findByCarIdAndStateTrue(@Param("car_id") Integer car_id);
     @Query(value = "select * from Driver where driver.id = ?1", nativeQuery = true)
     Driver findById(@Param("id") Integer id);
 

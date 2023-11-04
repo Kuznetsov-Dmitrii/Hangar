@@ -36,7 +36,8 @@ public class TransportationController implements ErrorController {
     public String transportationAdd(@RequestParam String nameFuel, @RequestParam Integer volumeFuel,
                                     @RequestParam LocalDate date, @RequestParam String address, Model model) throws IOException {
 
-        transportationService.transportationSave(nameFuel, volumeFuel,date, address);
+        System.out.println(transportationService.transportationSave(nameFuel, volumeFuel,date, address));
+
         return "redirect:/transportation";
     }
 

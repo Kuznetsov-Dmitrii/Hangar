@@ -13,9 +13,16 @@ import java.util.List;
 
 @Repository
 public interface FuelRepo extends org.springframework.data.repository.Repository<Fuel, Long> {
+
     @Query(value = "SELECT * FROM Fuel order by hangar_id", nativeQuery = true)
     List<Fuel> Allfuel();
-
+    @Query(value = "select *\n" +
+            "from fuel\n" +
+            "where name = ?1 and hangar_id=?2",nativeQuery = true)
+    Fuel findByNameHangarId(@Param("name")String name,@Param("hangar_id") Integer hangar_id);
+    @Query(value = "select volume from fuel\n" +
+            "where name=?1 and hangar_id=?2", nativeQuery = true)
+    Integer valueFuelHangar(@Param("nameFuel") String nameFuel,@Param("hangar_id") Integer hangar_id);
     @Query(value = "select id from Fuel order by id desc limit 1", nativeQuery = true)
     Integer LastId();
 
@@ -32,7 +39,12 @@ public interface FuelRepo extends org.springframework.data.repository.Repository
             "where id = ?1", nativeQuery = true)
     void updateFuelTransportation(@Param("id") Integer id, @Param("delivery") LocalDate delivery, @Param("name") String name,
                                   @Param("volume") Integer volume, @Param("hangar_id") Integer hangar_id);
-
+    @Modifying
+    @Transactional
+    @Query(value = "update Fuel\n" +
+            "set volume = ?2\n" +
+            "where id=?1")
+    void updateNewValue(@Param("id") Integer id,@Param("volume") Integer volume);
     @Query(value = "select fuel.id\n" +
             "from fuel\n" +
             "join hangar on hangar.id = fuel.hangar_id\n" +

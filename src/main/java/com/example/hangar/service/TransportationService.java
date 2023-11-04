@@ -1,26 +1,18 @@
 package com.example.hangar.service;
 
 
-import com.example.hangar.DTO.JsonDistanceDTO;
-import com.example.hangar.DTO.Points;
 import com.example.hangar.DTO.TransportationDTO;
 import com.example.hangar.entity.*;
 import com.example.hangar.repo.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 @Service
 public class TransportationService {
@@ -35,7 +27,10 @@ public class TransportationService {
 
     @Autowired
     HangarRepo hangarRepo;
-        //          get Distance Api 2GIS
+
+    private List<Transportation> transportationList = new ArrayList<>();
+    private HashMap<Integer, Integer> fuelDeleteFuelIdVolumeMap = new HashMap<>();
+    //          get Distance Api 2GIS
 
 //    private int getDistance(double latSource, double lonSource, double latTarget, double lonTarget) throws IOException {
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -95,32 +90,114 @@ public class TransportationService {
         return new double[]{lat, lon};
     }
 
+    public Integer carForTransportation(Transportation transportation, Integer hangar_id, String nameFuel, Integer volume) {
+        // получаем количество нужного топлива в ближайшем ангаре
+        int volumeInHangar = fuelRepo.valueFuelHangar(nameFuel, hangar_id);
+        // получаем список свободных машин со свободными водителями в определенном ангаре
+        List<Car> carList = carRepo.carForTransportation(hangar_id);
+        // количество топлива, взятого из определенного ангара
+        if (carList.size() != 0) {
+            for (Car car : carList) {
+                if (volume != 0 && volumeInHangar != 0) {
+                    if (volumeInHangar > volume) {
+                        if (volume > car.getLoadCapacity()) {
+                            // полный бак
+                            volume = volume - car.getLoadCapacity();
+                            // уменьшаем количество топлива в ангаре
+                            volumeInHangar = volumeInHangar - car.getLoadCapacity();
+                            transportation.setVolume(car.getLoadCapacity());
+                        } else {
+                            transportation.setVolume(volume);
+                            volumeInHangar = volumeInHangar - volume;
+                            // неполный бак
+                            volume = 0;
+                        }
+                    } else {        // 200   400   150
+                        if (volumeInHangar > car.getLoadCapacity()) {
+                            // полный бак
+                            volume = volume - car.getLoadCapacity();
+                            // уменьшаем количество топлива в ангаре
+                            volumeInHangar = volumeInHangar - car.getLoadCapacity();
+                            transportation.setVolume(car.getLoadCapacity());
+                        } else {
+                            transportation.setVolume(volumeInHangar);
+                            // неполный бак
+                            volume = volume- volumeInHangar;
+                            volumeInHangar =0;
+                        }
+                        // id ангара
+                    }
+                    fuelDeleteFuelIdVolumeMap.put(transportation.getFuel().getId(), volumeInHangar);
+                    transportation.setDriver(driverRepo.findByCarIdAndStateTrue(car.getId()));
+                    transportationList.add(transportation);
+                }
+            }
+        }
+        return volume;
+    }
+
     public String transportationSave(String nameFuel, Integer volumeFuel,
                                      LocalDate date, String address) throws IOException {
-
-        ArrayList<Hangar> hangar = (ArrayList<Hangar>) hangarRepo.hangarFuel(nameFuel,volumeFuel);
-        TreeMap<Double,Integer> distHangerAddress=new TreeMap<>();
+        if (!date.isAfter(LocalDate.now())) {
+            return "Неправильная дата.";
+        }
+        ArrayList<Hangar> hangar = (ArrayList<Hangar>) hangarRepo.hangarFuel(nameFuel, volumeFuel);
+        Transportation transportation = new Transportation();
+        TreeMap<Double, Integer> mapDistHangarId = new TreeMap<>();
         for (Hangar h : hangar) {
-            System.out.println();
-            System.out.println(address);
             double[] coordinatesSource = getCoordinates(h.getTown().getName() + "," + h.getAddress());
             double[] coordinatesTarget = getCoordinates(address);
-            double dist=DistanceAlgorithm.DistanceBetweenPlaces(coordinatesSource[1],coordinatesSource[0] ,
-                    coordinatesTarget[1] ,coordinatesTarget[0] );
-            distHangerAddress.put(dist,h.getNumber());
+            double dist = DistanceAlgorithm.DistanceBetweenPlaces(coordinatesSource[1], coordinatesSource[0],
+                    coordinatesTarget[1], coordinatesTarget[0]);
+            mapDistHangarId.put(dist, h.getId());
         }
-//        {0.7105183676006466=3, 134.96783627187537=1}
-//        3
-        if (distHangerAddress.size()==0){
+
+        if (mapDistHangarId.size() == 0) {
             System.out.println("В анграх недостаточно топлива.");
-            return "not save";
+            return "В анграх недостаточно топлива.";
         }
-        System.out.println(distHangerAddress);
-        System.out.println(distHangerAddress.get(distHangerAddress.firstKey()));
+        while (mapDistHangarId.size() > 0 && volumeFuel > 0) {
+            // получаем id ближайшего ангара
+            int hangarId = mapDistHangarId.get(mapDistHangarId.firstKey());
+//            System.out.println(volumeFuel);
+//            System.out.println(hangarId);
 
 
+            transportation.setAddress(address);
+            transportation.setDeparture_date(date);
+            transportation.setState(true);
+            transportation.setFuel(fuelRepo.findByNameHangarId(nameFuel, hangarId));
 
+            // получаем новое количество требуемого топлива
+            volumeFuel = carForTransportation(transportation, hangarId, nameFuel, volumeFuel);
 
+            // удаляем ближайший ангар из дерева
+            mapDistHangarId.remove(mapDistHangarId.firstKey());
+        }
+        if (volumeFuel==0) {
+            for (Map.Entry<Integer, Integer> entry : fuelDeleteFuelIdVolumeMap.entrySet()) {
+                fuelRepo.updateNewValue(entry.getKey(), entry.getValue());
+            }
+            for (Transportation transportation1 : transportationList) {
+                int newID;
+                if (transportationRepo.LastId() == null) {
+                    newID = 1;
+                } else {
+                    newID = transportationRepo.LastId() + 1;
+                }
+                transportationRepo.saveTransportation(newID, transportation1.getAddress(), transportation1.getDeparture_date(),
+                        transportation1.isState(), transportation1.getVolume(), transportation1.getDriver().getId(), transportation1.getFuel().getId());
+                driverRepo.updateDriverStateFalse(transportation1.getDriver().getId());
+                carRepo.updateCarStateFalse(transportation1.getDriver().getCar().getId());
+            }
+
+        }else {
+            transportationList.clear();
+            fuelDeleteFuelIdVolumeMap.clear();
+            return "Не хватило машин,водителей.";
+        }
+        transportationList.clear();
+        fuelDeleteFuelIdVolumeMap.clear();
 
 //        try {
 //            Driver driver = driverRepo.findById(numberDriver);
@@ -157,7 +234,7 @@ public class TransportationService {
 //            System.out.println(e.getMessage());
 //            return "not save";
 //        }
-        return "nice";
+        return "Заказ принят.";
     }
 
     public Iterable<TransportationDTO> Alltransportation() {
@@ -170,6 +247,7 @@ public class TransportationService {
         }
         return transportationDTOList;
     }
+
     class DistanceAlgorithm {
         static final double PIx = 3.141592653589793;
         static final double RADIO = 6378.16;
@@ -191,7 +269,7 @@ public class TransportationService {
             double a = (Math.sin(dlat / 2) * Math.sin(dlat / 2)) + Math.cos(Radians(lat1)) * Math.cos(Radians(lat2))
                     * (Math.sin(dlon / 2) * Math.sin(dlon / 2));
             double angle = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return (angle * RADIO) ;//distance in km
+            return (angle * RADIO);//distance in km
         }
 
     }

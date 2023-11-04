@@ -14,7 +14,11 @@ import java.util.List;
 public interface CarRepo extends org.springframework.data.repository.Repository<Car, Long> {
     @Query(value = "SELECT * FROM Car order by state desc", nativeQuery = true)
     List<Car> Allcar();
-
+    @Query(value = "select car.id,car.load_capacity, car.name, car.number,car.state,car.hangar_id\n\n" +
+            "from car\n" +
+            "join driver on car_id=car.id\n" +
+            "where car.state = 'true' and driver.state='true' and hangar_id=?1\n", nativeQuery = true)
+    List<Car> carForTransportation(@Param("hangar") Integer hangar_id);
     @Query(value = "select id from Car order by id desc limit 1", nativeQuery = true)
     Integer LastId();
 
@@ -51,16 +55,10 @@ public interface CarRepo extends org.springframework.data.repository.Repository<
     void carOrderComplete(@Param("username") String username);
     @Modifying
     @Transactional
-    @Query(value = "update Car\n" +
-            "set load_capacity = ?2,\n" +
-            " name = ?3,\n" +
-            " number = ?4,\n" +
-            " state = ?5,\n" +
-            " hangar_id = ?6\n" +
-            "where id = ?1", nativeQuery = true)
-    void updateCarTransportation(@Param("id") Integer id, @Param("loadCapacity") Integer loadCapacity,
-                   @Param("name") String name, @Param("number") String number,
-                   @Param("state") boolean state, @Param("hangar") Integer hangarId);
+    @Query(value = "update car\n" +
+            "set state = 'false'\n" +
+            "where id=?1", nativeQuery = true)
+    void updateCarStateFalse(@Param("id") Integer id);
     @Modifying
     @Transactional
     @Query(value = "insert into Car values (?1,?2, ?3,?4,?5,?6)", nativeQuery = true)

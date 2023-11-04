@@ -47,6 +47,10 @@ public class Transportation {
         this.departure_date = departure_date;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public LocalDate getDeparture_date() {
         return departure_date;
     }
