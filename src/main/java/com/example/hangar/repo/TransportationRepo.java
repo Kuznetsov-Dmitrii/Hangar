@@ -1,6 +1,9 @@
 package com.example.hangar.repo;
 
 
+import com.example.hangar.DTO.StatisticCarDTO;
+import com.example.hangar.DTO.StatisticDriverDTO;
+import com.example.hangar.DTO.StatisticFuelDTO;
 import com.example.hangar.entity.Transportation;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,9 +14,33 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TransportationRepo extends org.springframework.data.repository.Repository<Transportation, Long> {
+    @Query(value = "select fuel.name as name, sum( transportation.volume) as count\n" +
+            "from transportation \n" +
+            "join fuel on transportation.fuel_id = fuel.id\n" +
+            "where transportation.state = 'false'\n" +
+            "group by fuel.name", nativeQuery = true)
+    List<StatisticFuelDTO> statisticFuel();
 
     @Query(value = "select id from Transportation order by id desc limit 1", nativeQuery = true)
     Integer LastId();
+
+    @Query(value = "select car.name as name , car.number as number, count(*) as count\n " +
+            "from transportation\n" +
+            "join driver \n" +
+            "on driver.id = transportation.driver_id\n" +
+            "join car\n" +
+            "on driver.car_id=car.id " +
+            "group by car.number,car.name", nativeQuery = true)
+    List<StatisticCarDTO> statisticCar();
+
+    @Query(value = "select driver.id as id, driver.name as name,driver.midlname as midlname,\n" +
+            "\t\tdriver.surname as surname, count(*) as count\n" +
+            "from driver\n" +
+            "join transportation\n" +
+            "on driver.id = transportation.driver_id\n" +
+            "group by driver.id\n" +
+            "order by count", nativeQuery = true)
+    List<StatisticDriverDTO> statisticDriver();
 
     @Query(value = "select count(*) from Transportation where car_id=?1", nativeQuery = true)
     Integer CountByCar(@Param("car_id") Integer car_id);

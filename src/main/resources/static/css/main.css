@@ -8,3 +8,8 @@
 body div {
     padding-top: 10px;
 }
+#main{
+   text-decoration: none;
+   margin-left: 20px;
+   color: black;
+}

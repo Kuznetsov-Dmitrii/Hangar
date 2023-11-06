@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Статистика машин</title>
+    <link href="../css/transportation.css" rel="stylesheet">
+</head>
+<body>
+<div><a th:href="@{/statistics}" id="main">Назад</a></div>
+<div>
+    <table id="table-id"  border="1" class="table">
+        <caption>Количество рейсов у каждой машины</caption>
+        <thead>
+        <tr>
+            <th>название</th>
+            <th>номер</th>
+            <th>количество рейсов</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${statisticCar}">
+            <td th:text="${el.getName}"></td>
+            <td th:text="${el.getNumber}"></td>
+            <td th:text="${el.getCount}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

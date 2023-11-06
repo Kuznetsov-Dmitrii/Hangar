@@ -21,20 +21,47 @@
 <!--    </form>-->
 <!--</div>-->
 <h3 class="outH3">Список водителей:</h3>
-<h3 class="outH3">Номер, фио, номер автомобиля, статус.</h3>
-<div th:each="el : ${driver}" class="outDiv">
-    <div><a class="outEdit" th:text="${el.id}"/></div>
-    <div><a class="outEdit" th:text="${el.surname}+' '+${el.name}+' ' + ${el.midlname}"/></div>
-    <div><a class="outEdit" th:text="${el.car.getNumber}"/></div>
-    <div><a class="state" th:text="${el.state}"/></div>
-    <div class="edit">
-        <a id="123" class="editA" th:href="@{'/driver/'+${el.id}+'/edit'}">Редактировать</a>
-    </div>
-    <form th:action="@{'/driver/'+${el.id}+'/remove'}" method="post">
-        <button id="deleteButton" type="submit">Удалить</button>
-    </form>
+<div>
+    <table id="table-id"  border="1" class="table">
+        <caption>Список заказов</caption>
+        <thead>
+        <tr>
+            <th>номер</th>
+            <th>фио</th>
+            <th>номер автомобиля</th>
+            <th>статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${driver}">
+            <td th:text="${el.id}"></td>
+            <td th:text="${el.surname}+' '+${el.name}+' ' + ${el.midlname}"></td>
+            <td th:text="${el.car.getNumber}"></td>
+            <td class="state" th:text="${el.state}"></td>
+            <td><a class="editA" th:href="@{'/driver/'+${el.id}+'/edit'}">Редактировать</a></td>
+            <td>
+                <form th:action="@{'/driver/'+${el.id}+'/remove'}" method="post">
+                    <button id="deleteButton" type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
+<!--<h3 class="outH3">Номер, фио, номер автомобиля, статус.</h3>-->
+<!--<div th:each="el : ${driver}" class="outDiv">-->
+<!--    <div><a class="outEdit" th:text="${el.id}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.surname}+' '+${el.name}+' ' + ${el.midlname}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.car.getNumber}"/></div>-->
+<!--    <div><a class="state" th:text="${el.state}"/></div>-->
+<!--    <div class="edit">-->
+<!--        <a id="123" class="editA" th:href="@{'/driver/'+${el.id}+'/edit'}">Редактировать</a>-->
+<!--    </div>-->
+<!--    <form th:action="@{'/driver/'+${el.id}+'/remove'}" method="post">-->
+<!--        <button id="deleteButton" type="submit">Удалить</button>-->
+<!--    </form>-->
+<!--</div>-->
+<script  src="js/transportation.js"></script>
 <script  src="js/driver.js"></script>
 
 </body>

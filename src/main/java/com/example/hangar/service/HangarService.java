@@ -3,9 +3,7 @@ package com.example.hangar.service;
 
 
 import com.example.hangar.DTO.HangarInfoDTO;
-import com.example.hangar.entity.Car;
 import com.example.hangar.entity.Hangar;
-import com.example.hangar.entity.Town;
 import com.example.hangar.repo.HangarRepo;
 import com.example.hangar.repo.TownRepo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -31,8 +31,9 @@ padding-left:8px;
     }
 #deleteButton{
     background: red;
-    margin-left:8px;
-
+    margin-left:5px;
+    margin-bottom:10px;
+    margin-right: 5px;
 }
 .outDiv{
     width: 600px;
@@ -57,4 +58,6 @@ button{
     text-decoration: none;
     color: black;
     padding-left:4px;
+    margin-left:5px;
+    margin-right:5px;
 }

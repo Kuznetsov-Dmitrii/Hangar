@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="../css/main.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Статистика</title>
+</head>
+<body>
+<div><a th:href="@{/main}" id="main">Main page</a></div>
+<div>
+    <li class="liClass"><a class="aClass" th:href="@{/statistic/driver}">Водители</a></li>
+    <br>
+    <li class="liClass"><a class="aClass" th:href="@{/statistic/car}">Машины</a></li>
+    <br>
+<!--    <li class="liClass"><a class="aClass" th:href="@{/statistic/transportation}">Перевозки</a></li>-->
+<!--    <br>-->
+    <li class="liClass"><a class="aClass" th:href="@{/statistic/fuel}">Топливо</a></li>
+    <br>
+</div>
+</body>
+</html>
