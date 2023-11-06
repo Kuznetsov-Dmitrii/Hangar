@@ -13,7 +13,7 @@ import java.security.Principal;
 @Controller
 public class ForDriverController {
     @Autowired
-    ForDriverService forDriverService;
+    private ForDriverService forDriverService;
 
     @GetMapping("/forDriver")
     public String forDriver(Principal principal, Model model) {

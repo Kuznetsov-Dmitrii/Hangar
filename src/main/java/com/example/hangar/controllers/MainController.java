@@ -13,18 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
     @Autowired
-    HangarService hangarService;
+    private HangarService hangarService;
     @Autowired
-    FuelService fuelService;
+    private FuelService fuelService;
     @Autowired
-    CarService carService;
-
+    private CarService carService;
     @Autowired
-    TownService townService;
+    private TownService townService;
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("mes","Hi");
+        model.addAttribute("mes", "Hi");
         return "home";
     }
 

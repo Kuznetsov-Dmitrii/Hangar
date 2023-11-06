@@ -18,9 +18,9 @@ import java.util.List;
 @Service
 public class HangarService {
     @Autowired
-    HangarRepo hangarRepo;
+    private HangarRepo hangarRepo;
     @Autowired
-    TownRepo townRepo;
+    private TownRepo townRepo;
     public String hangarSave(Integer number,String town,String address){
         try {
             int newID;

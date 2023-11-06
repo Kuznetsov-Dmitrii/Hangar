@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForDriverService {
     @Autowired
-    TransportationRepo transportationRepo;
+    private TransportationRepo transportationRepo;
     @Autowired
-    DriverRepo driverRepo;
+    private DriverRepo driverRepo;
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
     public String orderComplete(String userName,Integer id){
         try {
             driverRepo.driverOrderComplete(userName);

@@ -9,18 +9,21 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class TownController {
     @Autowired
-    TownService townService;
+    private TownService townService;
 
     @PostMapping("/town")
     public String townAdd(@RequestParam String name, Model model) {
-        townService.townSave(name);
+        String message = townService.townSave(name);
+        model.addAttribute("message", message);
         return "redirect:/town";
     }
 
     @PostMapping("/town/{id}/remove")
     public String townDelete(@PathVariable(value = "id") Integer id, Model model) {
-        townService.townDelete(id);
-        return "redirect:/town";
+        String message = townService.townDelete(id);
+        model.addAttribute("message", message);
+            return "redirect:/town";
+
     }
 
     @GetMapping("/town")

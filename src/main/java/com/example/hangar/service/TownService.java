@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Service
 public class TownService {
     @Autowired
-    TownRepo townRepo;
+    private TownRepo townRepo;
 
     public Iterable<Town> allTown() {
         return townRepo.Alltown();
@@ -21,10 +21,12 @@ public class TownService {
     public String townDelete(Integer id) {
         try {
             townRepo.deleteTown(id);
+            return "Удалено";
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return "Ошибка удаления";
         }
-        return "delete";
+
     }
 
     public String townSave(String name) {
@@ -36,10 +38,10 @@ public class TownService {
                 newID = townRepo.LastId() + 1;
             }
             townRepo.saveTown(newID + 1, name);
-            return "save";
+            return "Сохранено";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "not save";
+            return "Ошибка";
         }
     }
 }

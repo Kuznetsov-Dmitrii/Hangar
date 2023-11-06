@@ -11,6 +11,11 @@ input{
     margin-left: 700px;
     position:absolute;
 }
+#main{
+   text-decoration: none;
+   margin-left: 20px;
+   color: black;
+}
 .outH3{
     margin-left: 20px;
 }

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class DriverService {
     @Autowired
-    DriverRepo driverRepo;
+    private DriverRepo driverRepo;
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
 
     public boolean driverSave(String name, String midlname, String surname, String carNumber,Integer userId) {
         try {

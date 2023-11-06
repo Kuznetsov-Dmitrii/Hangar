@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CarService  {
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
     @Autowired
-    HangarRepo hangarRepo;
+    private HangarRepo hangarRepo;
     public String carSave(Integer hangarNumber,String name, String number, Integer loadCapacity){
         number=number.toLowerCase();
         int newID;

@@ -6,6 +6,8 @@
     <link href="css/driver.css" rel="stylesheet">
 </head>
 <body>
+<div><a th:href="@{/main}" id="main">Main page</a></div>
+
 <form th:action="@{/registration}" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>

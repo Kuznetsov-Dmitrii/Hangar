@@ -16,20 +16,21 @@ import java.util.*;
 
 @Service
 public class TransportationService {
-    @Autowired
-    TransportationRepo transportationRepo;
-    @Autowired
-    CarRepo carRepo;
-    @Autowired
-    FuelRepo fuelRepo;
-    @Autowired
-    DriverRepo driverRepo;
 
     @Autowired
-    HangarRepo hangarRepo;
+    private TransportationRepo transportationRepo;
+    @Autowired
+    private CarRepo carRepo;
+    @Autowired
+    private FuelRepo fuelRepo;
+    @Autowired
+    private DriverRepo driverRepo;
+    @Autowired
+    private HangarRepo hangarRepo;
 
     private List<Transportation> transportationList = new ArrayList<>();
     private HashMap<Integer, Integer> fuelDeleteFuelIdVolumeMap = new HashMap<>();
+
     //          get Distance Api 2GIS
 
 //    private int getDistance(double latSource, double lonSource, double latTarget, double lonTarget) throws IOException {
@@ -90,7 +91,7 @@ public class TransportationService {
         return new double[]{lat, lon};
     }
 
-    public Integer carForTransportation(Transportation transportation, Integer hangar_id, String nameFuel, Integer volume) {
+    private Integer carForTransportation(Transportation transportation, Integer hangar_id, String nameFuel, Integer volume) {
         // получаем количество нужного топлива в ближайшем ангаре
         int volumeInHangar = fuelRepo.valueFuelHangar(nameFuel, hangar_id);
         // получаем список свободных машин со свободными водителями в определенном ангаре
@@ -122,8 +123,8 @@ public class TransportationService {
                         } else {
                             transportation.setVolume(volumeInHangar);
                             // неполный бак
-                            volume = volume- volumeInHangar;
-                            volumeInHangar =0;
+                            volume = volume - volumeInHangar;
+                            volumeInHangar = 0;
                         }
                         // id ангара
                     }
@@ -159,9 +160,6 @@ public class TransportationService {
         while (mapDistHangarId.size() > 0 && volumeFuel > 0) {
             // получаем id ближайшего ангара
             int hangarId = mapDistHangarId.get(mapDistHangarId.firstKey());
-//            System.out.println(volumeFuel);
-//            System.out.println(hangarId);
-
 
             transportation.setAddress(address);
             transportation.setDeparture_date(date);
@@ -174,7 +172,7 @@ public class TransportationService {
             // удаляем ближайший ангар из дерева
             mapDistHangarId.remove(mapDistHangarId.firstKey());
         }
-        if (volumeFuel==0) {
+        if (volumeFuel == 0) {
             for (Map.Entry<Integer, Integer> entry : fuelDeleteFuelIdVolumeMap.entrySet()) {
                 fuelRepo.updateNewValue(entry.getKey(), entry.getValue());
             }
@@ -191,14 +189,11 @@ public class TransportationService {
                 carRepo.updateCarStateFalse(transportation1.getDriver().getCar().getId());
             }
 
-        }else {
-            transportationList.clear();
-            fuelDeleteFuelIdVolumeMap.clear();
-            return "Не хватило машин,водителей.";
+        } else {
+            cleatListMap();
+            return "Не хватает машин,водителей.";
         }
-        transportationList.clear();
-        fuelDeleteFuelIdVolumeMap.clear();
-
+        cleatListMap();
 //        try {
 //            Driver driver = driverRepo.findById(numberDriver);
 //            Car car = driverRepo.findById(numberDriver).getCar();
@@ -237,6 +232,11 @@ public class TransportationService {
         return "Заказ принят.";
     }
 
+    private void cleatListMap() {
+        transportationList.clear();
+        fuelDeleteFuelIdVolumeMap.clear();
+    }
+
     public Iterable<TransportationDTO> Alltransportation() {
         List<TransportationDTO> transportationDTOList = new ArrayList<>();
         List<Transportation> transportationList = transportationRepo.Alltransportation();
@@ -248,7 +248,7 @@ public class TransportationService {
         return transportationDTOList;
     }
 
-    class DistanceAlgorithm {
+    private class DistanceAlgorithm {
         static final double PIx = 3.141592653589793;
         static final double RADIO = 6378.16;
 

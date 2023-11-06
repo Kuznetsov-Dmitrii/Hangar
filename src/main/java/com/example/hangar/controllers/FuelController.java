@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Controller
 public class FuelController {
     @Autowired
-    FuelService fuelService;
+    private FuelService fuelService;
 
     @PostMapping("/fuel")
     public String fuelAdd(@RequestParam String name, @RequestParam Integer volume,

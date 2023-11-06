@@ -6,32 +6,68 @@
     <link href="css/transportation.css" rel="stylesheet">
 </head>
 <body>
+<div><a th:href="@{/main}" id="main">Main page</a></div>
 
 <div id="inDiv">
     <form th:action="@{/transportation}" method="post">
         <h3 id="h3Form">Добавление:</h3>
-<!--        <input type="number" name="numberDriver" placeholder="Введите номер водителя"><br>-->
+        <div><a th:text="${message}" id="message"></a></div>
+
+        <!--        <input type="number" name="numberDriver" placeholder="Введите номер водителя"><br>-->
         <!--        <input type="text" name="numberCar" placeholder="Введите номер автомобиля"><br>-->
         <input type="text" name="nameFuel" placeholder="Введите название топлива"><br>
         <input type="number" name="volumeFuel" placeholder="Введите объем топлива"><br>
         <div id="dateTransportation"><a id="aDateTransportation">Дата отправки:</a></div>
         <input type="date" name="date"/><br>
-        <input type="text" name="address" placeholder="Введите адрес" id="address" ><br>
+        <input type="text" name="address" placeholder="Введите адрес" id="address"><br>
         <button type="submit" id="add">Добавить</button>
     </form>
 </div>
-<h3 class="outH3">Список перевозок:</h3>
-<h3 class="outH3">Номер, адрес, номер автомобиля, номер водителя,</h3>
-<h3 class="outH3">топливо, объем, дата отправления, статус.</h3>
-<div th:each="el : ${transportation}" class="outDiv">
-    <div><a class="outEdit" th:text="${el.getTransportation.id}"/></div>
-    <div><a class="outEdit" th:text="${el.getTransportation.address}"/></div>
-    <div><a class="outEdit" th:text="${el.car.getNumber}"/></div>
-    <div><a class="outEdit" th:text="${el.getTransportation.driver.getId}"/></div>
-    <div><a class="outEdit" th:text="${el.getTransportation.fuel.getName}"/></div>
-    <div><a class="outEdit" th:text="${el.getTransportation.volume}"/></div>
-    <div><a class="outEdit" th:text="${el.getTransportation.departure_date}"/></div>
-    <div><a class="outEdit" th:text="${el.getTransportation.state}"/></div>
+<!--<h3 class="outH3">Список перевозок:</h3>-->
+<!--<h3 class="outH3">Номер, адрес, номер автомобиля, номер водителя,</h3>-->
+<!--<h3 class="outH3">топливо, объем, дата отправления, статус.</h3>-->
+
+<div>
+    <table id="table-id"  border="1" class="table">
+        <caption>Список заказов</caption>
+        <thead>
+            <tr>
+                <th>номер</th>
+                <th>адрес</th>
+                <th>номер автомобиля</th>
+                <th>номер водителя</th>
+                <th>топливо</th>
+                <th>объем</th>
+                <th>дата отправления</th>
+                <th>статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="el : ${transportation}">
+                <td th:text="${el.getTransportation.id}"></td>
+                <td th:text="${el.getTransportation.address}"></td>
+                <td th:text="${el.car.getNumber}"></td>
+                <td th:text="${el.getTransportation.driver.getId}"></td>
+                <td th:text="${el.getTransportation.fuel.getName}"></td>
+                <td th:text="${el.getTransportation.volume}"></td>
+                <td th:text="${el.getTransportation.departure_date}"></td>
+                <td class="state" th:text="${el.getTransportation.state}"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+<!--<div th:each="el : ${transportation}" class="outDiv">-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.id}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.address}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.car.getNumber}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.driver.getId}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.fuel.getName}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.volume}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.departure_date}"/></div>-->
+<!--    <div><a class="outEdit" th:text="${el.getTransportation.state}"/></div>-->
+<!--</div>-->
+
+<script  src="js/transportation.js"></script>
 </body>
 </html>

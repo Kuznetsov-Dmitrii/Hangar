@@ -9,7 +9,12 @@ input{
 padding-left:8px;
     text-decoration: none;
     color: black;
-    }
+}
+#main{
+   text-decoration: none;
+   margin-left: 20px;
+   color: black;
+}
 #inDiv{
     width: 400px;
     height: 200px;

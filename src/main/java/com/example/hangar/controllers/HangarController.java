@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HangarController {
     @Autowired
-    HangarService hangarService;
+    private HangarService hangarService;
 
     @GetMapping("/hangar")
     public String hangar(Model model) {

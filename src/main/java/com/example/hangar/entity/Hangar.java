@@ -2,7 +2,7 @@ package com.example.hangar.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
+
 
 @Entity
 @Table(name = "hangar")
@@ -16,6 +16,7 @@ public class Hangar {
 
     @ManyToOne
     private Town town;
+
     private String address;
 
     public Hangar() {

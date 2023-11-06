@@ -4,14 +4,26 @@
 input{
     margin-top: 15px;
 }
+#message{
+    color:black;
+}
 #h3Form{
     height: 10px;
     margin-top:0px;
 }
+#main{
+   text-decoration: none;
+   margin-left: 20px;
+   color: black;
+}
+#table-id{
+    border: 1px;
+
+}
 #inDiv{
     width: 400px;
     height: 200px;
-    margin-left: 700px;
+    margin-left: 1200px;
     position:absolute;
 }
 #add{

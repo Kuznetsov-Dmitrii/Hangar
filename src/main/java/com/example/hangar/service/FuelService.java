@@ -15,9 +15,9 @@ import java.util.Date;
 @Service
 public class FuelService {
     @Autowired
-    FuelRepo fuelRepo;
+    private FuelRepo fuelRepo;
     @Autowired
-    HangarRepo hangarRepo;
+    private HangarRepo hangarRepo;
 
     public Iterable<Fuel> allFuel() {
         return fuelRepo.Allfuel();

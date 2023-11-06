@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DriverController {
 
     @Autowired
-    DriverService driverService;
+    private DriverService driverService;
 
 
 //    @PostMapping("/driver")

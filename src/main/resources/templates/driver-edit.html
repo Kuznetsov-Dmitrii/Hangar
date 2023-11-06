@@ -6,6 +6,8 @@
     <link href="../../css/driver.css" rel="stylesheet">
 </head>
 <body>
+<div><a th:href="@{/main}" id="main">Main page</a></div>
+
 <div id="inDiv" th:object="${driver}">
     <form method="post" th:action="@{'/driver/'+${id}+'/edit'}">
         <div><input type="text" th:value="*{name}" name="name" placeholder="Введите имя"><br></div>
