@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Fuel</title>
     <link href="css/fuel.css" rel="stylesheet">
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+
 </head>
 <body>
 <div><a th:href="@{/main}" id="main">Main page</a></div>
@@ -20,7 +23,7 @@
 
 </form>
 </div>
-
+<!--style="width: 400px;"-->
 <h3 class="outH3">Список топлива:</h3>
 <h3 class="outH3">Название, объем, дата поставки.</h3>
 <div class="outDiv" th:each="el : ${fuel}">
