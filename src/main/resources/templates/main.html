@@ -26,8 +26,10 @@
     <br>
     <li class="liClass"><a class="aClass" th:href="@{/deliveryFuelAllHangar}">Delivery Fuel</a></li>
     <br>
+        <form th:action="@{'/deliveryFuelAllHangar'}" method="post">
+            <button id="deleteButton" type="submit">Добавить топлива</button>
+        </form>
 </div>
-
 <script src="js/main.js"></script>
 </body>
 </html>

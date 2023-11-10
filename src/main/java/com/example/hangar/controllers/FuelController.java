@@ -31,10 +31,14 @@ public class FuelController {
 
     @Autowired
     FuelRepo fuelRepo; // Условная доставка топлива
-    @GetMapping("/deliveryFuelAllHangar")
+    @PostMapping("/deliveryFuelAllHangar")
     public String deliveryFuelAllHangar(Model model) {
-        fuelRepo.deliveryFuelAllHangar();
-        return "redirect:/fuel";
+        try {
+            fuelRepo.deliveryFuelAllHangar();
+        }catch (Exception e){
+
+        }
+        return "redirect:/main";
     }
 
 }

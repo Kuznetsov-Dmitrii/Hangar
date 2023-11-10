@@ -16,9 +16,9 @@ public class HangarController {
     private HangarService hangarService;
 
     @GetMapping("/hangar")
-    public ResponseEntity<String> hangar(Model model) {
+    public String hangar(Model model) {
         model.addAttribute("hangar", hangarService.allHangar());
-        return new ResponseEntity<>("hangar",HttpStatus.OK);
+        return "hangar";
     }
 
     @PostMapping("/hangar")
