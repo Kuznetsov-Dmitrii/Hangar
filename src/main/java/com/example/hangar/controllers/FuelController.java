@@ -1,5 +1,6 @@
 package com.example.hangar.controllers;
 
+import com.example.hangar.repo.FuelRepo;
 import com.example.hangar.service.FuelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,4 +28,13 @@ public class FuelController {
         model.addAttribute("fuel", fuelService.allFuel());
         return "fuel";
     }
+
+    @Autowired
+    FuelRepo fuelRepo; // Условная доставка топлива
+    @GetMapping("/deliveryFuelAllHangar")
+    public String deliveryFuelAllHangar(Model model) {
+        fuelRepo.deliveryFuelAllHangar();
+        return "redirect:/fuel";
+    }
+
 }

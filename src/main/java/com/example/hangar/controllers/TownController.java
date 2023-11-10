@@ -1,5 +1,7 @@
 package com.example.hangar.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import com.example.hangar.service.TownService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,17 @@ public class TownController {
     private TownService townService;
 
     @PostMapping("/town")
-    public String townAdd(@RequestParam String name, Model model) {
+    public ResponseEntity<String> townAdd(@RequestParam String name, Model model) {
         String message = townService.townSave(name);
         model.addAttribute("message", message);
-        return "redirect:/town";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
+//    @PostMapping("/town")
+//    public String townAdd(@RequestParam String name, Model model) {
+//        String message = townService.townSave(name);
+//        model.addAttribute("message", message);
+//        return message;
+//    }
 
     @PostMapping("/town/{id}/remove")
     public String townDelete(@PathVariable(value = "id") Integer id, Model model) {

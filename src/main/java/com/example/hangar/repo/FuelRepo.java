@@ -13,7 +13,8 @@ import java.util.List;
 
 @Repository
 public interface FuelRepo extends org.springframework.data.repository.Repository<Fuel, Long> {
-
+    @Query(value = "UPDATE fuel SET volume = volume + 1000", nativeQuery = true)
+    void deliveryFuelAllHangar();
     @Query(value = "SELECT * FROM Fuel order by hangar_id", nativeQuery = true)
     List<Fuel> Allfuel();
     @Query(value = "select *\n" +
@@ -25,10 +26,8 @@ public interface FuelRepo extends org.springframework.data.repository.Repository
     Integer valueFuelHangar(@Param("nameFuel") String nameFuel,@Param("hangar_id") Integer hangar_id);
     @Query(value = "select id from Fuel order by id desc limit 1", nativeQuery = true)
     Integer LastId();
-
     @Query(value = "select * from Fuel where fuel.id = ?1", nativeQuery = true)
     Fuel findById(@Param("id") Integer id);
-
     @Modifying
     @Transactional
     @Query(value = "update Fuel\n" +

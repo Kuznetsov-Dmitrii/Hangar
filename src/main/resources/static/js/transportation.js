@@ -1,14 +1,14 @@
-console.log(123);
-var state=document.getElementsByClassName('state');
+let state=document.getElementsByClassName('state');
+const table = document.querySelector('table');
 
-for(var i=0;i<state.length;i++){
-    if(state[i].text==='true'){
-        state[i].text="Свободна";
+for(let i=0;i<state.length;i++){
+    if(state[i].textContent=='true'){
+        state[i].textContent='Активен';
     }else{
-        state[i].text="Занятя";
+        state[i].textContent='Завершен';
     }
 }
-const table = document.querySelector('table');
+
 let colIndex = -1;
 const sortTable = function (index, type, isSorted) {
     const tbody = table.querySelector('tbody');
@@ -55,24 +55,4 @@ table.addEventListener('click', (e) => {
     sortTable(index, type, colIndex == index);
     colIndex = (colIndex == index) ? -1: index;
  });
-
-
-
-
-
-
-//var transportation=document.getElementsByClassName('outDiv');
-//console.log(transportation[0].children[2].innerText);
-//let arr=[];
-//for(let i=0;i<transportation.length;i++){
-//    arr.push(transportation[i].children[2].innerText);
-//
-//}
-//console.log(arr.sort);
-
-//let  response = fetch('http://localhost:8080/transportation');
-//console.log(response.json());
-
-
-
 

@@ -29,8 +29,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers( "/forDriver").hasAuthority("DRIVER")
                         .requestMatchers("/main", "/driver/**", "/cars/**", "/town",
-                                "/transportation", "/fuel",
-                                "/cars", "/town", "/hangar", "/driver","/registration").hasAuthority("SUPERVISOR")
+                                "/transportation", "/fuel","/cars", "/town", "/hangar", "/driver",
+                                "/registration","/deliveryFuelAllHangar","/statistic**").hasAuthority("SUPERVISOR")
 
                         .anyRequest().authenticated()
                 )

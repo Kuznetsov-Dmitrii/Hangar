@@ -3,6 +3,7 @@ package com.example.hangar.service;
 import com.example.hangar.entity.Fuel;
 import com.example.hangar.entity.Town;
 import com.example.hangar.repo.TownRepo;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +41,7 @@ public class TownService {
             townRepo.saveTown(newID + 1, name);
             return "Сохранено";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return "Ошибка";
+            return e.getMessage();
         }
     }
 }
