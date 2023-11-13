@@ -21,7 +21,24 @@ public interface DriverRepo extends org.springframework.data.repository.Reposito
             "join user_role on login.id=user_role.user_id\n" +
             "where roles = 'DRIVER') order by state desc,id", nativeQuery = true)
     List<Driver> Alldriver();
-
+    @Modifying
+    @Transactional
+    @Query(value = "update driver set state='true'\n" +
+            "where id=(select driver.id\n" +
+            "from driver\n" +
+            "join login\n" +
+            " on driver.user_id=login.id\n" +
+            " where login.username=?1)", nativeQuery = true)
+    void readyOrder(@Param("userName") String userName);
+    @Modifying
+    @Transactional
+    @Query(value = "update driver set state='false'\n" +
+            "where id=(select driver.id\n" +
+            "from driver\n" +
+            "join login\n" +
+            " on driver.user_id=login.id\n" +
+            " where login.username=?1)", nativeQuery = true)
+    void notReadyOrder(@Param("userName") String userName);
     @Query(value = "update driver set state=true where id=(select driver.id from driver\n" +
             "join login on driver.user_id=login.id\n" +
             "where username = ?1)", nativeQuery = true)

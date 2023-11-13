@@ -95,7 +95,7 @@ public class TransportationService {
         // получаем количество нужного топлива в ближайшем ангаре
         int volumeInHangar = fuelRepo.valueFuelHangar(nameFuel, hangar_id);
         // получаем список свободных машин со свободными водителями в определенном ангаре
-        List<Car> carList = carRepo.carForTransportation(hangar_id);
+        List<Car> carList = carRepo.carForTransportation(hangar_id,transportation.getDeparture_date());
         // количество топлива, взятого из определенного ангара
         if (carList.size() != 0) {
             for (Car car : carList) {

@@ -17,15 +17,26 @@ public class ForDriverController {
 
     @GetMapping("/forDriver")
     public String forDriver(Principal principal, Model model) {
-        System.out.println(principal.getName());
         model.addAttribute("driverFlight", forDriverService.AllFlight(principal.getName()));
         return "forDriver";
     }
 
     @PostMapping("/forDriver/{id}/complete")
-    public String orderComplete(Principal principal,@PathVariable(value = "id") Integer id, Model model) {
-        forDriverService.orderComplete(principal.getName(),id);
-        return "redirect:/forDriver";
+    public String orderComplete(Principal principal, @PathVariable(value = "id") Integer id, Model model) {
+        forDriverService.orderComplete(principal.getName(), id);
+        return "redirect:/";
+    }
+
+    @PostMapping("/forDriver/readyOrder")
+    public String readyOrder(Principal principal,  Model model) {
+        forDriverService.readyOrder(principal.getName());
+        return "redirect:/";
+    }
+
+    @PostMapping("/forDriver/notReadyOrder")
+    public String notReadyOrder(Principal principal,  Model model) {
+        forDriverService.notReadyOrder(principal.getName());
+        return "redirect:/";
     }
 
 }

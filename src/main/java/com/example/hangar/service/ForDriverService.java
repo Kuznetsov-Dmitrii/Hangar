@@ -31,8 +31,14 @@ public class ForDriverService {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-
         return "delete";
+    }
+
+    public void readyOrder(String userName){
+        driverRepo.readyOrder(userName);
+    }
+    public void notReadyOrder(String userName){
+        driverRepo.notReadyOrder(userName);
     }
     public Iterable<Transportation> AllFlight(String username){
         return transportationRepo.AlltransportationDriver(username);

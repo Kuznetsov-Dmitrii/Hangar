@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -14,11 +15,20 @@ import java.util.List;
 public interface CarRepo extends org.springframework.data.repository.Repository<Car, Long> {
     @Query(value = "SELECT * FROM Car order by state desc", nativeQuery = true)
     List<Car> Allcar();
-    @Query(value = "select car.id,car.load_capacity, car.name, car.number,car.state,car.hangar_id\n\n" +
+    @Query(value = "select car.id,car.load_capacity, car.name, car.number,\n" +
+            "\t\tcar.state,car.hangar_id \n" +
             "from car\n" +
             "join driver on car_id=car.id\n" +
-            "where car.state = 'true' and driver.state='true' and hangar_id=?1\n", nativeQuery = true)
-    List<Car> carForTransportation(@Param("hangar") Integer hangar_id);
+            "join transportation on transportation.driver_id=driver.id\n" +
+            "where car.state = 'true' and driver.state='true' and hangar_id=?1  \n" +
+            "\t\tand car.id not in (select car.id\n" +
+            "\t\tfrom car\n" +
+            "\t\tjoin driver on car_id=car.id\n" +
+            "\t\tjoin transportation on transportation.driver_id=driver.id\n" +
+            "\t\twhere transportation.state='true' and transportation.departure_date=?2\n" +
+            "\t\tgroup by car.id)\n" +
+            "group by car.id,car.name", nativeQuery = true)
+    List<Car> carForTransportation(@Param("hangar") Integer hangar_id, @Param("date")LocalDate date);
     @Query(value = "select id from Car order by id desc limit 1", nativeQuery = true)
     Integer LastId();
 
