@@ -5,6 +5,7 @@ import com.example.hangar.DTO.TransportationDTO;
 import com.example.hangar.entity.*;
 import com.example.hangar.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -13,9 +14,11 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class TransportationService {
+    private static final Logger logger=Logger.getLogger(TransportationService.class.getName());
 
     @Autowired
     private TransportationRepo transportationRepo;
@@ -113,7 +116,7 @@ public class TransportationService {
                             // неполный бак
                             volume = 0;
                         }
-                    } else {        // 200   400   150
+                    } else {
                         if (volumeInHangar > car.getLoadCapacity()) {
                             // полный бак
                             volume = volume - car.getLoadCapacity();
@@ -185,8 +188,9 @@ public class TransportationService {
                 }
                 transportationRepo.saveTransportation(newID, transportation1.getAddress(), transportation1.getDeparture_date(),
                         transportation1.isState(), transportation1.getVolume(), transportation1.getDriver().getId(), transportation1.getFuel().getId());
-                driverRepo.updateDriverStateFalse(transportation1.getDriver().getId());
-                carRepo.updateCarStateFalse(transportation1.getDriver().getCar().getId());
+                logger.info(SecurityContextHolder.getContext().getAuthentication().getName()+" создал заказ # "+ newID);
+                //driverRepo.updateDriverStateFalse(transportation1.getDriver().getId());
+                ///carRepo.updateCarStateFalse(transportation1.getDriver().getCar().getId());
             }
 
         } else {
@@ -248,7 +252,7 @@ public class TransportationService {
         return transportationDTOList;
     }
 
-    private class DistanceAlgorithm {
+    private static class DistanceAlgorithm {
         static final double PIx = 3.141592653589793;
         static final double RADIO = 6378.16;
 

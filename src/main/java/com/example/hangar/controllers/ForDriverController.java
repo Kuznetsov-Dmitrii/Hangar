@@ -2,6 +2,8 @@ package com.example.hangar.controllers;
 
 import com.example.hangar.service.ForDriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +24,10 @@ public class ForDriverController {
     }
 
     @PostMapping("/forDriver/{id}/complete")
-    public String orderComplete(Principal principal, @PathVariable(value = "id") Integer id, Model model) {
-        forDriverService.orderComplete(principal.getName(), id);
-        return "redirect:/";
+    public ResponseEntity<String> orderComplete(Principal principal, @PathVariable(value = "id") Integer id, Model model) {
+        String message = forDriverService.orderComplete(principal.getName(), id);
+        model.addAttribute("message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PostMapping("/forDriver/readyOrder")

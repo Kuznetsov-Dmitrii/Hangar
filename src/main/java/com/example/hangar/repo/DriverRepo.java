@@ -1,17 +1,13 @@
 package com.example.hangar.repo;
 
 
-import com.example.hangar.entity.Car;
 import com.example.hangar.entity.Driver;
-import com.example.hangar.entity.User;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.io.InputStream;
 import java.util.List;
 
 @Repository
@@ -21,6 +17,7 @@ public interface DriverRepo extends org.springframework.data.repository.Reposito
             "join user_role on login.id=user_role.user_id\n" +
             "where roles = 'DRIVER') order by state desc,id", nativeQuery = true)
     List<Driver> Alldriver();
+
     @Modifying
     @Transactional
     @Query(value = "update driver set state='true'\n" +

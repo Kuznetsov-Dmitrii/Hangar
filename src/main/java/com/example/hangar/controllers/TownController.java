@@ -19,19 +19,13 @@ public class TownController {
         model.addAttribute("message", message);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-//    @PostMapping("/town")
-//    public String townAdd(@RequestParam String name, Model model) {
-//        String message = townService.townSave(name);
-//        model.addAttribute("message", message);
-//        return message;
-//    }
+
 
     @PostMapping("/town/{id}/remove")
     public String townDelete(@PathVariable(value = "id") Integer id, Model model) {
         String message = townService.townDelete(id);
         model.addAttribute("message", message);
             return "redirect:/town";
-
     }
 
     @GetMapping("/town")

@@ -1,9 +1,10 @@
 package com.example.hangar.controllers;
 
-import com.example.hangar.entity.Car;
 import com.example.hangar.entity.Driver;
 import com.example.hangar.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +18,6 @@ public class DriverController {
 
     @Autowired
     private DriverService driverService;
-
-
-//    @PostMapping("/driver")
-//    public String driverAdd(@RequestParam String name, @RequestParam String midlname, @RequestParam String surname,
-//                            @RequestParam String carNumber, @RequestParam String username, Model model) {
-//        //driverService.driverSave(name, midlname, surname, carNumber.toUpperCase(),username);
-//        return "redirect:/driver";
-//    }
 
     @GetMapping("/driver")
     public String driver(Model model) {
@@ -48,8 +41,9 @@ public class DriverController {
     }
 
     @PostMapping("/driver/{id}/remove")
-    public String driverDelete(@PathVariable(value = "id") Integer id, Model model) {
-        driverService.driverDelete(id);
-        return "redirect:/driver";
+    public ResponseEntity<String> driverDelete(@PathVariable(value = "id") Integer id, Model model) {
+        String message = driverService.driverDelete(id);
+        model.addAttribute("message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

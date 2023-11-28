@@ -28,11 +28,11 @@ public class HangarService {
                 newID = hangarRepo.LastId() + 1;
             }
             hangarRepo.saveHangar(newID,address,number,townRepo.findByName(town).getId());
-            return "save";
+            return "Сохранено";
 
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return "notSave";
+            return e.getMessage();
         }
     }
     public Iterable<HangarInfoDTO> allHangar(){
@@ -44,6 +44,4 @@ public class HangarService {
         }
         return hangarInfoDTOS;
     }
-
-
 }

@@ -22,10 +22,11 @@ public class HangarController {
     }
 
     @PostMapping("/hangar")
-    public String carAdd(@RequestParam String address, @RequestParam Integer number,
+    public ResponseEntity<String> carAdd(@RequestParam String address, @RequestParam Integer number,
                          @RequestParam String town, Model model) {
-        hangarService.hangarSave(number, town, address);
-        return "redirect:/hangar";
+        String message =hangarService.hangarSave(number, town, address);
+        model.addAttribute("message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 }

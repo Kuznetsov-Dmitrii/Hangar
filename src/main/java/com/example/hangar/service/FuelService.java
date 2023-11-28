@@ -32,10 +32,10 @@ public class FuelService {
                 newID = fuelRepo.LastId() + 1;
             }
             fuelRepo.saveFuel(newID, delivery, name, volume, hangarRepo.findByNumber(hangarNumber).getId());
-            return "save";
+            return "Сохранено";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "not save";
+            return e.getMessage();
         }
     }
 }

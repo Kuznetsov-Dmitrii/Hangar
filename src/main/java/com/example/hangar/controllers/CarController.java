@@ -3,6 +3,8 @@ package com.example.hangar.controllers;
 import com.example.hangar.entity.Car;
 import com.example.hangar.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +24,11 @@ public class CarController {
     }
 
     @PostMapping("/cars")
-    public String carAdd(@RequestParam String name, @RequestParam String number,
-                         @RequestParam Integer loadCapacity, @RequestParam Integer hangarNumber, Model model) {
-        carService.carSave(hangarNumber, name, number, loadCapacity);
-        return "redirect:/cars";
+    public ResponseEntity<String> carAdd(@RequestParam String name, @RequestParam String number,
+                                         @RequestParam Integer loadCapacity, @RequestParam Integer hangarNumber, Model model) {
+        String message = carService.carSave(hangarNumber, name, number, loadCapacity);
+        model.addAttribute("message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @GetMapping("/cars/{id}/edit")
@@ -44,8 +47,9 @@ public class CarController {
     }
 
     @PostMapping("/car/{id}/remove")
-    public String carDelete(@PathVariable(value = "id") Integer id, Model model) {
-        carService.carDelete(id);
-        return "redirect:/cars";
+    public ResponseEntity<String> carDelete(@PathVariable(value = "id") Integer id, Model model) {
+        String message = carService.carDelete(id);
+        model.addAttribute("message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

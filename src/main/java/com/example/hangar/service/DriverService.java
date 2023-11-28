@@ -1,11 +1,14 @@
 package com.example.hangar.service;
 
+import com.example.hangar.controllers.FuelController;
 import com.example.hangar.entity.Driver;
-import com.example.hangar.entity.User;
 import com.example.hangar.repo.CarRepo;
 import com.example.hangar.repo.DriverRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.logging.Logger;
 
 @Service
 public class DriverService {
@@ -13,6 +16,7 @@ public class DriverService {
     private DriverRepo driverRepo;
     @Autowired
     private CarRepo carRepo;
+    private static final Logger logger=Logger.getLogger(FuelController.class.getName());
 
     public boolean driverSave(String name, String midlname, String surname, String carNumber,Integer userId) {
         try {
@@ -35,26 +39,26 @@ public class DriverService {
         return driverRepo.findById(id);
     }
 
-    public String driverUpdate(Integer id, String name, String midlname, String surname,
-                               String carNumber, boolean state) {
+    public void driverUpdate(Integer id, String name, String midlname, String surname,
+                             String carNumber, boolean state) {
         carNumber = carNumber.toLowerCase();
-
         try {
             driverRepo.updateDriver(id, midlname, name, surname, state, carRepo.findByNumber(carNumber).getId());
-            return "save";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "not save";
         }
+        logger.info(SecurityContextHolder.getContext().getAuthentication().getName()+ " изменил данные водителя с id "+id);
+
     }
 
     public String driverDelete(Integer id) {
+        logger.info(SecurityContextHolder.getContext().getAuthentication().getName()+ " удалил водителя с id "+ id);
         try {
             driverRepo.deleteDriver(id);
+            return "Удалено";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return e.getMessage();
         }
-        return "delete";
     }
 
     public Iterable<Driver> Alldriver() {

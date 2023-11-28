@@ -3,6 +3,8 @@ package com.example.hangar.controllers;
 import com.example.hangar.service.TransportationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +21,11 @@ public class TransportationController implements ErrorController {
     private TransportationService transportationService;
 
     @PostMapping("/transportation")
-    public String transportationAdd(@RequestParam String nameFuel, @RequestParam Integer volumeFuel,
+    public ResponseEntity<String> transportationAdd(@RequestParam String nameFuel, @RequestParam Integer volumeFuel,
                                     @RequestParam LocalDate date, @RequestParam String address, Model model) throws IOException {
         String message=transportationService.transportationSave(nameFuel, volumeFuel,date, address);
-        model.addAttribute("message",message);
-        System.out.println(message);
-        return "redirect:/transportation";
+        model.addAttribute("message", message);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @GetMapping("/transportation")
