@@ -14,12 +14,19 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 @Service
 public class TransportationService {
     private static final Logger logger=Logger.getLogger(TransportationService.class.getName());
-
+    static {
+        try {
+            logger.addHandler(new FileHandler( "C:\\Users\\Дмитрий\\log.txt"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Autowired
     private TransportationRepo transportationRepo;
     @Autowired

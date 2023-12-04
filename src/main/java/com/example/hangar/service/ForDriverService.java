@@ -8,11 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 @Service
 public class ForDriverService {
     private static final Logger logger=Logger.getLogger(ForDriverService.class.getName());
+    static {
+        try {
+            logger.addHandler(new FileHandler( "C:\\Users\\Дмитрий\\log.txt"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Autowired
     private TransportationRepo transportationRepo;
     @Autowired

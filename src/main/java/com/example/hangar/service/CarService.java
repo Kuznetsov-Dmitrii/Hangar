@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 @Service
@@ -18,6 +21,13 @@ public class CarService  {
     @Autowired
     private HangarRepo hangarRepo;
     private static final Logger logger=Logger.getLogger(FuelController.class.getName());
+    static {
+        try {
+            logger.addHandler(new FileHandler( "C:\\Users\\Дмитрий\\log.txt"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public String carSave(Integer hangarNumber,String name, String number, Integer loadCapacity){
         number=number.toLowerCase();
